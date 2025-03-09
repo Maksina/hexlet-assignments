@@ -22,14 +22,10 @@ public final class App {
 
         // BEGIN
         app.get("/companies/{id}", ctx -> {
-            var id = ctx.pathParamAsClass("id", Integer.class).get();
-            try {
-                var company = COMPANIES.get(id);
-            }
-            catch (Exception ex) {
-                throw new NotFoundResponse("Entity with id = " + id + " not found");
-            }
-            ctx.json(COMPANIES.get(id));
+            var id = ctx.pathParam("id");
+            var company = COMPANIES.stream().filter(map -> id.equals(map.get("id"))).findFirst().
+                    orElseThrow(() -> new NotFoundResponse("Company not found"));
+            ctx.json(company);
         });
         // END
 
