@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.http.HttpStatus;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,10 +51,12 @@ public class CommentsController {
         var currentComment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found"));
         currentComment.setId(id);
         currentComment.setBody(newComment.getBody());
+        currentComment.setPostId(newComment.getPostId());
         commentRepository.save(currentComment);
     }
 
     @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void deleteComment(@PathVariable Long id){
         commentRepository.deleteById(id);
     }
