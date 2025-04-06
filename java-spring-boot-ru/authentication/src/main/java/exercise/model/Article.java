@@ -25,6 +25,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class Article implements BaseEntity {
+    //test
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private long id;
